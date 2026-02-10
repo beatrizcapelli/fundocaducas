@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fundo de Resgate Caducas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+  <style>
+    :root {
+      --roxo: #5A2D82;
+      --roxo-escuro: #3E1E5F;
+      --roxo-claro: rgba(122, 75, 163, 0.35);
+      --bege: #F6E7CF;
+      --rosa: #E8A1B2;
+      --texto: #2E203A;
+      --branco: #ffffff;
+      --glass: rgba(255,255,255,0.12);
+      --blur: blur(14px);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(180deg, #4a216e, #5a2d82);
+      /* Mantendo o background original */
+      background:
+        linear-gradient(rgba(62,30,95,0.78), rgba(62,30,95,0.78)),
+        url("banner3.png"),
+        url("banner2.png"),
+        url("banner3.png");
+      background-size: cover, cover, cover, cover;
+      background-position: center, top center, center center, bottom center;
+      background-attachment: fixed, fixed, fixed, fixed;
+      color: var(--texto);
+    }
+
+    /* ===== MENU MODERNO E RESPONSIVO ===== */
+    header {
+      position: fixed; /* Fixo para acompanhar o scroll */
+      top: 20px;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      pointer-events: none; /* Permite clicar nas laterais vazias */
+    }
+
+    .nav-capsule {
+      pointer-events: auto;
+      /* Fundo muito mais sólido para leitura no scroll */
+      background: rgba(46, 32, 58, 0.95); 
+      backdrop-filter: blur(10px);
+      border-radius: 999px;
+      padding: 12px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.3s ease;
+    }
+
+    /* Links do Desktop */
+    .nav-links {
+      display: flex;
+      gap: 10px;
+    }
+
+    .nav-links a {
+      color: var(--bege);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      transition: all .2s ease;
+    }
+
+    .nav-links a:hover {
+      background: var(--rosa);
+      color: var(--roxo-escuro);
+    }
+
+    /* Botão Hambúrguer (Mobile) */
+    .hamburger-btn {
+      display: none; /* Escondido no desktop */
+      background: none;
+      border: none;
+      color: var(--bege);
+      font-size: 24px;
+      cursor: pointer;
+      padding: 0;
+      display: flex; /* Flex para alinhar o ícone */
+      align-items: center;
+    }
+
+    /* Overlay do Menu Mobile */
+    .mobile-menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(62, 30, 95, 0.98);
+      backdrop-filter: blur(15px);
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .mobile-menu-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .mobile-menu-overlay a {
+      font-family: 'Manrope', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--bege);
+      text-decoration: none;
+      margin: 15px 0;
+      transition: color 0.2s;
+    }
+    
+    .mobile-menu-overlay a:hover { color: var(--rosa); }
+
+    .close-menu-btn {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      background: none;
+      border: none;
+      color: var(--bege);
+      font-size: 32px;
+      cursor: pointer;
+    }
+
+    /* ===== REGRAS GERAIS ORIGINAIS ===== */
+    section { padding: 36px 20px; }
+    .container { max-width: 1100px; margin: auto; }
+    h1, h2 { color: var(--bege); margin-bottom: 16px; font-family: 'Manrope', sans-serif; }
+    p { line-height: 1.7; }
+
+    /* HERO */
+    .hero { text-align: center; padding-top: 140px; }
+    .hero-card {
+      background: var(--glass);
+      backdrop-filter: var(--blur);
+      border-radius: 28px;
+      padding: 50px 30px;
+      max-width: 760px;
+      margin: auto;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    }
+    .hero-logo { width: 200px; max-width: 60%; margin: 0 auto 16px; display: block; filter: drop-shadow(0 6px 18px rgba(0,0,0,0.35)); }
+    .hero p { color: var(--bege); }
+
+    /* CARDS */
+    .card {
+      background: rgba(255,255,255,0.92);
+      border-radius: 26px;
+      padding: 40px 30px;
+      margin-bottom: 22px;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.25);
+    }
+    .card h2 { color: var(--roxo-escuro); }
+
+    /* NOTÍCIAS (Mantendo estilo original) */
+    .noticias-list { display: flex; flex-direction: column; gap: 18px; margin-top: 20px; }
+    .noticia-item {
+      display: flex; align-items: center; gap: 16px;
+      background: rgba(255,255,255,0.92);
+      padding: 14px 18px; border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+    }
+    .noticia-item img { width: 72px; height: 72px; object-fit: cover; border-radius: 50%; flex-shrink: 0; border: 3px solid var(--rosa); }
+    .noticia-item strong { display: block; font-size: 1rem; margin-bottom: 4px; }
+    .noticia-item p { font-size: 0.9rem; opacity: 0.85; }
+    .noticia-data { display: inline-block; margin-bottom: 6px; background: rgba(90, 45, 130, 0.12); color: var(--roxo); font-size: 0.75rem; font-weight: 600; padding: 3px 8px; border-radius: 999px; }
+
+    /* DOGS GRID */
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 22px; margin-top: 24px; }
+    .dog-card {
+      text-align: center; background: rgba(255,255,255,0.9);
+      border-radius: 22px; padding: 18px; cursor: pointer;
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+    .dog-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.25); }
+    .dog-card img { width: 130px; height: 130px; object-fit: cover; border-radius: 50%; margin-bottom: 10px; border: 4px solid transparent; }
+    .dog-card.adotado img { border-color: #6BCF9B; }
+    .dog-card.adaptacao img { border-color: var(--roxo); }
+    .dog-card span { display: inline-block; margin-top: 6px; font-size: 12px; padding: 4px 10px; border-radius: 999px; font-weight: 600; }
+    .dog-card.adotado span { background: #E6F7EF; color: #1E7F4D; }
+    .dog-card.adaptacao span { background: #EFE6FA; color: var(--roxo); }
+
+    /* TOOLTIP */
+    .dog-tooltip {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      background: rgba(30,20,45,0.95); color: #fff; padding: 14px 18px;
+      border-radius: 16px; max-width: 320px; width: calc(100% - 40px);
+      display: none; z-index: 999;
+    }
+    .dog-tooltip strong { display: block; margin-bottom: 6px; }
+
+    /* DOAÇÕES */
+    .doacoes-texto { max-width: 900px; margin-bottom: 26px; font-size: 1rem; line-height: 1.7; }
+    .doacoes-texto strong { color: var(--roxo-escuro); }
+    .doacoes-list { margin: 14px 0 0 18px; font-size: 0.95rem; line-height: 1.7; }
+    .doacoes-list li { margin-bottom: 6px; }
+    .doacoes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; margin-top: 24px; }
+    .pix-card { background: linear-gradient(180deg, #ffffff, #f4ecff); border-radius: 24px; padding: 26px; }
+    .pix-card h3 { margin-bottom: 8px; color: var(--roxo-escuro); }
+    .pix-card .pix-detalhe { font-size: 0.9rem; opacity: 0.85; margin-bottom: 10px; }
+    .pix-card img { max-width: 180px; display: block; margin: 14px auto; border-radius: 16px; }
+    .btn { display: inline-block; margin-top: 12px; background: var(--roxo); color: white; padding: 10px 18px; border-radius: 12px; text-decoration: none; font-weight: 600; }
+
+    /* ===== TRANSPARÊNCIA (CORREÇÃO DE ALTURA) ===== */
+    .transp-badges { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0 20px; }
+    .transp-badge { font-size: 0.8rem; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: rgba(90, 45, 130, 0.12); color: var(--roxo); }
+
+    /* Novo Layout Grid para alinhar alturas */
+    .transp-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr; /* Colunas proporcionais */
+      gap: 24px;
+      align-items: stretch; /* O PULO DO GATO: força alturas iguais */
+    }
+
+    .transp-img-container {
+      background: #fff;
+      border-radius: 14px;
+      padding: 10px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center; justify-content: center;
+      min-height: 300px;
+    }
+    
+    .transp-extrato-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain; /* Ajusta a imagem sem cortar */
+      display: block;
+    }
+
+    .transp-tabela {
+      width: 100%;
+      height: 100%; /* Ocupa altura total do grid */
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 0.85rem;
+      background: #ffffff;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.18);
+    }
+    /* Estilos da tabela original */
+    .transp-tabela thead th { background: linear-gradient(180deg, #f2eaff, #e8ddff); color: var(--roxo-escuro); font-weight: 700; padding: 10px 12px; text-align: left; font-size: 0.8rem; }
+    .transp-tabela tbody td { padding: 10px 12px; border-bottom: 1px solid rgba(0,0,0,0.08); }
+    .transp-tabela tbody tr:nth-child(even) td { background: #faf7ff; }
+    .transp-tabela tbody tr:last-child td { border-bottom: none; }
+    .transp-tabela tfoot td { padding: 12px; font-weight: 700; background: #efe6fa; color: var(--roxo-escuro); }
+    .transp-tabela td:last-child, .transp-tabela th:last-child { text-align: right; }
+
+    /* ===== CONTATO (NOVO LAYOUT + ÍCONES) ===== */
+    .contato-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); /* 3 colunas no desktop */
+      gap: 20px;
+      margin-top: 24px;
+    }
+
+    .contato-btn {
+      display: flex;
+      flex-direction: column; /* Ícone em cima do texto no desktop */
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.95);
+      padding: 24px;
+      border-radius: 20px;
+      text-decoration: none;
+      color: var(--texto);
+      box-shadow: 0 8px 22px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+      border: 2px solid transparent;
+      text-align: center;
+    }
+
+    .contato-btn:hover {
+      transform: translateY(-4px);
+      border-color: var(--rosa);
+      color: var(--roxo);
+    }
+
+    /* Estilizando o ícone do Phosphor */
+    .contato-btn i {
+      font-size: 32px;
+      color: var(--roxo);
+      margin-bottom: 10px;
+    }
+
+    .contato-btn span { font-weight: 600; font-size: 0.95rem; }
+
+    footer { text-align: center; color: var(--bege); padding: 40px 20px 60px; font-size: 14px; opacity: .85; }
+
+    /* ===== RESPONSIVO (MOBILE) ===== */
+    @media (max-width: 800px) {
+      .doacoes-grid { grid-template-columns: 1fr; }
+      
+      /* Menu Mobile */
+      .nav-links { display: none; } /* Esconde links texto */
+      .hamburger-btn { display: flex; } /* Mostra botão hambúrguer */
+      .nav-capsule { padding: 10px 20px; } /* Ajuste de tamanho */
+
+      /* Transparência Mobile */
+      .transp-grid {
+        grid-template-columns: 1fr; /* Um embaixo do outro */
+        height: auto;
+      }
+      .transp-img-container { height: auto; min-height: 200px; }
+      .transp-tabela { height: auto; }
+
+      /* Contato Mobile */
+      .contato-grid {
+        grid-template-columns: 1fr; /* Um embaixo do outro */
+        gap: 14px;
+      }
+      .contato-btn {
+        flex-direction: row; /* Ícone ao lado do texto */
+        justify-content: flex-start;
+        padding: 16px 20px;
+        gap: 16px;
+      }
+      .contato-btn i { margin-bottom: 0; font-size: 24px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="nav-capsule">
+    <nav class="nav-links">
+      <a href="#inicio">Início</a>
+      <a href="#noticias">Notícias</a>
+      <a href="#dogs">Cães</a>
+      <a href="#doacoes">Doações</a>
+      <a href="#transparencia">Transparência</a>
+      <a href="#contato">Contato</a>
+    </nav>
+
+    <button class="hamburger-btn" onclick="toggleMenu()">
+      <i class="ph ph-list"></i>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-menu-overlay" id="mobileMenuOverlay">
+  <button class="close-menu-btn" onclick="toggleMenu()">
+    <i class="ph ph-x"></i>
+  </button>
+  <a href="#inicio" onclick="toggleMenu()">Início</a>
+  <a href="#noticias" onclick="toggleMenu()">Notícias</a>
+  <a href="#dogs" onclick="toggleMenu()">Cães</a>
+  <a href="#doacoes" onclick="toggleMenu()">Doações</a>
+  <a href="#transparencia" onclick="toggleMenu()">Transparência</a>
+  <a href="#contato" onclick="toggleMenu()">Contato</a>
+</div>
+
+<section id="inicio" class="hero">
+  <div class="hero-card">
+    <img src="logo-caducas.png" alt="Fundo de Resgate Caducas" class="hero-logo">
+    <h1>Fundo de Resgate Caducas</h1>
+    <p><strong>Cuidado, transparência e amor em cada resgate</strong></p>
+  </div>
+</section>
+
+<section id="noticias">
+  <div class="container card">
+    <h2>Últimas notícias</h2>
+    <div class="noticias-list">
+      <div class="noticia-item">
+        <img src="dog9.png" alt="Olga">
+        <div>
+          <strong>Olga finalizou a quimioterapia</strong>
+          <span class="noticia-data">03 fev 2026</span>
+          <p>Última sessão realizada com sucesso. Seguimos com acompanhamento e muito carinho.</p>
+        </div>
+      </div>
+      <div class="noticia-item">
+        <img src="dog8.png" alt="Cacau">
+        <div>
+          <strong>Cacau está em adaptação</strong>
+          <span class="noticia-data">24 jan 2026</span>
+          <p>Estamos torcendo para sua nova família se adaptar à rotina com uma filhote ligada no 220V para confirmar a adoção nos próximos dias!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="dogs">
+  <div class="container card">
+    <h2>Cães que já ajudamos</h2>
+    <div class="grid">
+      <div class="dog-card adotado" data-nome="Cadu" data-info="Primeiro resgate do projeto. Vive feliz com sua família.">
+        <img src="dog1.jpeg"><h4>Cadu</h4><span>Adotado</span>
+      </div>
+      <div class="dog-card adotado" data-nome="Max" data-info="Resgatado de situação difícil e hoje muito amado.">
+        <img src="dog2.jpeg"><h4>Max</h4><span>Adotado</span>
+      </div>
+      <div class="dog-card adotado" data-nome="Belinha" data-info="Senhorinha doce, adotada por família com crianças.">
+        <img src="dog3.jpeg"><h4>Belinha</h4><span>Adotada</span>
+      </div>
+      <div class="dog-card adotado" data-nome="Lobinho" data-info="Medroso no início, hoje confiante e feliz.">
+        <img src="dog4.jpeg"><h4>Lobinho</h4><span>Adotado</span>
+      </div>
+      <div class="dog-card adotado" data-nome="Luke" data-info="Passou por cirurgia e superou tudo com alegria.">
+        <img src="dog5.jpeg"><h4>Luke</h4><span>Adotado</span>
+      </div>
+      <div class="dog-card adotado" data-nome="Ton" data-info="Resgatado no mercado e adotado rapidamente.">
+        <img src="dog6.jpeg"><h4>Ton</h4><span>Adotado</span>
+      </div>
+      <div class="dog-card adotado" data-nome="Olga" data-info="Resgatada com tumores, passou por cirurgia e quimioterapia.">
+        <img src="dog7.jpeg"><h4>Olga</h4><span>Adotada</span>
+      </div>
+      <div class="dog-card adaptacao" data-nome="Cacau" data-info="Em fase de adaptação com nova família.">
+        <img src="dog8.png"><h4>Cacau</h4><span>Em adaptação</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="dog-tooltip" id="dogTooltip">
+  <strong id="tooltipNome"></strong>
+  <p id="tooltipTexto"></p>
+</div>
+
+<section id="doacoes">
+  <div class="container card">
+    <h2>Doações</h2>
+    <p class="doacoes-texto">
+      Sua ajuda mantém os resgates acontecendo.
+      Com as contribuições, conseguimos pagar <strong>exames, remédios, cirurgias,
+      vacinas, alimentação, hospedagem temporária</strong> e também realizar
+      <strong>doações pontuais para outras ONGs e protetores independentes</strong>.
+    </p>
+    <p class="doacoes-texto">
+      O Fundo de Resgate Caducas surgiu com a proposta de <strong>doações mensais</strong>,
+      o que nos permite ajudar de forma constante.
+      Em casos extremos, também pedimos apoio extra através das redes sociais.
+    </p>
+
+    <div class="doacoes-grid">
+      <div class="pix-card">
+        <h3>Doação avulsa via Pix</h3>
+        <p class="pix-detalhe">
+          <strong>Chave (e-mail):</strong> ajudecadu@gmail.com<br>
+          Mercado Pago (Beatriz)
+        </p>
+        <img src="pix-qrcode.png" alt="QR Code Pix">
+        <p class="pix-detalhe" style="text-align:center;">Obrigada por apoiar o projeto 💜</p>
+      </div>
+
+      <div class="pix-card">
+        <h3>Assinatura mensal no cartão</h3>
+        <p class="pix-detalhe">
+          Se você preferir, pode apoiar com uma <strong>assinatura recorrente
+          no cartão de crédito</strong>, processada com segurança pelo Mercado Pago.
+        </p>
+        <ul class="doacoes-list">
+          <li>Cobrança automática todo mês;</li>
+          <li>Você escolhe o valor da assinatura;</li>
+          <li>Ajuda contínua para manter os resgates.</li>
+        </ul>
+        <a href="https://www.mercadopago.com.br/subscriptions/checkout/v2?preapproval_plan_id=4a7af56b05e64bd48641db0d330b8a07" target="_blank" class="btn">Quero assinar</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="transparencia">
+  <div class="container card">
+    <h2>Transparência</h2>
+    <p>
+      Todos os meses publicamos as entradas e saídas do fundo.
+      Se tiver qualquer dúvida, é só chamar a gente.
+    </p>
+    <div class="transp-badges">
+      <span class="transp-badge">Último extrato: 03 fev 2026</span>
+      <span class="transp-badge">Período atual: 15 jan – 03 fev 2026</span>
+    </div>
+
+    <div class="transp-grid">
+      <div class="transp-img-container">
+        <img src="extrato.jpeg" alt="Extrato bancário do período" class="transp-extrato-img">
+      </div>
+
+      <table class="transp-tabela">
+        <thead>
+          <tr>
+            <th>Tipo</th>
+            <th>Descrição</th>
+            <th>Valor (R$)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Entrada</td><td>Total de entradas</td><td>186,14</td></tr>
+          <tr><td>Saída</td><td>50% adestrador da Cacau</td><td>125,00</td></tr>
+          <tr><td>Saída</td><td>Exame de sangue da Olga</td><td>50,00</td></tr>
+          <tr><td>Saída</td><td>Última quimio da Olga</td><td>300,00</td></tr>
+          <tr><td>Saída</td><td>Nexgard Spectra para a Olga</td><td>116,00</td></tr>
+          <tr><td>Saída</td><td>Doação cachorrinha - Grupão Proanimal</td><td>50,00</td></tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="2">Saldo final</td>
+            <td>179,82</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="contato">
+  <div class="container card">
+    <h2>Contato</h2>
+    <p>Fale com a gente ou acompanhe nosso trabalho:</p>
+
+    <div class="contato-grid">
+      <a class="contato-btn" href="https://instagram.com/fundocaducas" target="_blank">
+        <i class="ph ph-instagram-logo"></i>
+        <span>@fundocaducas</span>
+      </a>
+
+      <a class="contato-btn" href="https://wa.me/5516982015572" target="_blank">
+        <i class="ph ph-whatsapp-logo"></i>
+        <span>WhatsApp</span>
+      </a>
+
+      <a class="contato-btn" href="mailto:ajudecadu@gmail.com">
+        <i class="ph ph-envelope"></i>
+        <span>ajudecadu@gmail.com</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Fundo de Resgate Caducas • Transparência e cuidado
+</footer>
+
+<script>
+  /* SCRIPT ORIGINAL DOS DOGS */
+  const dogs = document.querySelectorAll('.dog-card');
+  const tooltip = document.getElementById('dogTooltip');
+  const tooltipNome = document.getElementById('tooltipNome');
+  const tooltipTexto = document.getElementById('tooltipTexto');
+
+  dogs.forEach(dog => {
+    dog.addEventListener('click', () => {
+      tooltipNome.textContent = dog.dataset.nome;
+      tooltipTexto.textContent = dog.dataset.info;
+      tooltip.style.display = 'block';
+    });
+  });
+
+  tooltip.addEventListener('click', () => {
+    tooltip.style.display = 'none';
+  });
+
+  /* NOVO SCRIPT PARA O MENU MOBILE */
+  function toggleMenu() {
+    const menu = document.getElementById('mobileMenuOverlay');
+    menu.classList.toggle('active');
+  }
+</script>
+
+</body>
+</html>
